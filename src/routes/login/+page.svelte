@@ -12,6 +12,14 @@
 	let error = $state('');
 
 	onMount(async () => {
+		// Clean up any stale auth state when arriving at login page
+		try {
+			localStorage.removeItem('cookieFallback');
+			document.cookie = 'client_logged_in=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+		} catch (e) {
+			console.log('Error cleaning up auth state:', e);
+		}
+
 		// Check if user is already authenticated
 		const currentUser = await getCurrentUser();
 		

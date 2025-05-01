@@ -57,7 +57,7 @@
 <div class="relative">
 	<!-- Resume header with print button -->
 	<div class="mb-8 flex items-start justify-between print:hidden">
-		<h1 class="text-4xl font-bold">My Resume</h1>
+		<h1 class="text-4xl font-bold">Chris Vo</h1>
 		<button
 			onclick={printResume}
 			class="bg-primary-500 hover:bg-primary-600 flex items-center gap-2 rounded-lg px-4 py-2 text-white"
@@ -75,17 +75,18 @@
 	{:else}
 		<!-- Resume content -->
 		<div class="mx-auto max-w-4xl space-y-12">
-			{#each sections as section (section.id)}
+			{#each sections as section (section.$id)}
+				{@const Icon = getSectionIcon(section.title)}
 				<section>
 					<div class="mb-4 flex items-center gap-2">
 						<span class="text-primary-500">
-							<svelte:component this={getSectionIcon(section.title)} size={24} />
+							<Icon size={24} />
 						</span>
 						<h2 class="border-primary-500 border-b-2 pb-1 text-2xl font-bold">{section.title}</h2>
 					</div>
 
 					<div class="space-y-6">
-						{#each getSectionEntries(section.id) as entry (entry.id)}
+						{#each getSectionEntries(section.$id) as entry (entry.$id)}
 							<div class="bg-surface-50-900-token rounded-lg p-4 shadow-sm">
 								<div class="mb-2 flex flex-col md:flex-row md:justify-between">
 									<h3 class="text-xl font-semibold">{entry.title}</h3>
@@ -131,7 +132,7 @@
 					<h2 class="border-primary-500 mb-4 border-b-2 pb-1 text-2xl font-bold">Skills</h2>
 
 					<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-						{#each skills as skill (skill.id)}
+						{#each skills as skill (skill.$id)}
 							<div class="bg-surface-50-900-token rounded-lg p-4 shadow-sm">
 								<div class="flex items-center justify-between">
 									<span class="font-semibold">{skill.name}</span>
