@@ -57,11 +57,11 @@
 
 <div class="relative">
 	<!-- Resume header with print button -->
-	<div class="mb-8 flex items-start justify-between print:hidden">
+	<div class="mb-8 flex items-start justify-between">
 		<h1 class="text-4xl font-bold">Chris Vo</h1>
 		<button
 			onclick={printResume}
-			class="bg-primary-500 hover:bg-primary-600 flex items-center gap-2 rounded-lg px-4 py-2 text-white"
+			class="print:hidden bg-primary-500 hover:bg-primary-600 flex items-center gap-2 rounded-lg px-4 py-2 text-white"
 		>
 			<Printer size={18} />
 			<span>Print</span>
