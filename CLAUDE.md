@@ -72,7 +72,7 @@ src/
 - **CSS**: Use Tailwind with Skeleton component library
 - **Error Handling**: Use type-safe patterns with strict checks
 - **Testing**: Vitest with Testing Library patterns
-  - Tests co-located with components (*.svelte.test.ts)
+  - Tests co-located with components (\*.svelte.test.ts)
   - Component tests use render/screen pattern
 
 ## Svelte 5 Guidelines
