@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { getSections, createSection, updateSection, deleteSection } from '$lib/appwrite/services';
+	import type { NewSection, Section } from '$lib/appwrite/services';
 	import { Plus, Edit, Trash2, Eye, EyeOff, Loader2 } from '@lucide/svelte';
 
-	let sections = $state([]);
+	let sections: Section[] = $state([]);
 	let loading = $state(true);
 	let error = $state('');
 
@@ -23,8 +24,8 @@
 		try {
 			loading = true;
 			sections = await getSections();
-		} catch (err: any) {
-			error = err.message || 'Failed to load sections';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to load sections';
 		} finally {
 			loading = false;
 		}
@@ -34,12 +35,12 @@
 		showNewSectionForm = true;
 	}
 
-	function createSlug(text) {
+	function createSlug(text: string) {
 		return text
 			.toLowerCase()
 			.replace(/\s+/g, '-')
-			.replace(/[^\w\-]+/g, '')
-			.replace(/\-\-+/g, '-')
+			.replace(/[^\w-]+/g, '')
+			.replace(/--+/g, '-')
 			.replace(/^-+/, '')
 			.replace(/-+$/, '');
 	}
@@ -50,7 +51,7 @@
 		try {
 			loading = true;
 			// Create a new section with order set to the next available position
-			const newSection = {
+			const newSection: NewSection = {
 				title: newSectionTitle.trim(),
 				slug: createSlug(newSectionTitle),
 				order: sections.length,
@@ -63,15 +64,15 @@
 			// Reset form
 			newSectionTitle = '';
 			showNewSectionForm = false;
-		} catch (err: any) {
-			error = err.message || 'Failed to create section';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to create section';
 		} finally {
 			loading = false;
 		}
 	}
 
-	function startEditSection(section) {
-		editingSectionId = section.id;
+	function startEditSection(section: Section) {
+		editingSectionId = section.$id;
 		editingSectionTitle = section.title;
 	}
 
@@ -88,22 +89,22 @@
 			// Reset form
 			editingSectionId = null;
 			editingSectionTitle = '';
-		} catch (err: any) {
-			error = err.message || 'Failed to update section';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to update section';
 		} finally {
 			loading = false;
 		}
 	}
 
-	async function toggleSectionVisibility(section) {
+	async function toggleSectionVisibility(section: Section) {
 		try {
 			loading = true;
-			await updateSection(section.id, {
+			await updateSection(section.$id, {
 				isVisible: !section.isVisible
 			});
 			await loadSections();
-		} catch (err: any) {
-			error = err.message || 'Failed to update section visibility';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to update section visibility';
 		} finally {
 			loading = false;
 		}
@@ -122,8 +123,8 @@
 			loading = true;
 			await deleteSection(sectionId);
 			await loadSections();
-		} catch (err: any) {
-			error = err.message || 'Failed to delete section';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to delete section';
 		} finally {
 			loading = false;
 		}
@@ -302,7 +303,7 @@
 								</button>
 
 								<button
-									onclick={() => removeSection(section.id)}
+									onclick={() => removeSection(section.$id)}
 									class="hover:bg-surface-200-700-token text-error-500 rounded-lg p-2"
 									title="Delete section"
 								>

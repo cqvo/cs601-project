@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { logout, user as userStore, isAuthenticated, isRefreshing, getCurrentUser, refreshAuth } from '$lib/appwrite/auth';
+	import { logout, user as userStore, isRefreshing, getCurrentUser, refreshAuth } from '$lib/appwrite/auth';
 	import { LogOut, FileText, Settings, LayoutDashboard, Award, Loader2, RefreshCw } from '@lucide/svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -43,7 +43,7 @@
 			} else {
 				if (dev) console.log('DASHBOARD CLIENT: Auth refresh failed - session invalid');
 				authError = true;
-				// Redirect to login after failed refresh
+				// Redirect to /login after failed refresh
 				setTimeout(() => {
 					const currentPath = window.location.pathname;
 					goto(`/login?redirectTo=${encodeURIComponent(currentPath)}`);

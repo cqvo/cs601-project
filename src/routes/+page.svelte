@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { getVisibleSections, getVisibleEntries, getVisibleSkills } from '$lib/appwrite/services';
+	import type { Entry, Section, Skill } from '$lib/appwrite/services';
 	import { onMount } from 'svelte';
 	import { Printer, Briefcase, GraduationCap, Award } from '@lucide/svelte';
 
-	let sections = $state([]);
-	let entries = $state([]);
-	let skills = $state([]);
+	let sections: Section[] = $state([]);
+	let entries: Entry[] = $state([]);
+	let skills: Skill[] = $state([]);
 	let loading = $state(true);
 
 	// Function to load resume data
@@ -174,9 +175,6 @@
 		h1,
 		h2,
 		h3,
-		h4 {
-			color: black;
-		}
 
 		.shadow-sm {
 			box-shadow: none;

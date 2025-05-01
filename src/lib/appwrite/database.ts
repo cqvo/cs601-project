@@ -7,14 +7,20 @@ const ENTRIES_COLLECTION = 'entries';
 const SKILLS_COLLECTION = 'skills';
 
 export interface Section {
-	$id?: string;
+	$id: string;
 	title: string;
+	slug: string;
+	description?: string;
 	order: number;
 	isVisible: boolean;
+	iconName?: string;
+	$updatedAt: Date;
 }
 
+export type NewSection = Omit<Section, '$id' | '$updatedAt'>;
+
 export interface Entry {
-	$id?: string;
+	$id: string;
 	sectionId: string;
 	title: string;
 	subtitle?: string;
@@ -26,7 +32,7 @@ export interface Entry {
 }
 
 export interface Skill {
-	$id?: string;
+	$id: string;
 	name: string;
 	level: number; // 1-5
 	category: string;
@@ -60,7 +66,7 @@ export async function getVisibleSections() {
 	}
 }
 
-export async function createSection(section: Omit<Section, 'id'>) {
+export async function createSection(section: NewSection) {
 	try {
 		const response = await databases.createDocument(
 			DATABASE_ID,
@@ -77,7 +83,7 @@ export async function createSection(section: Omit<Section, 'id'>) {
 
 export async function updateSection(
 	id: string,
-	section: Partial<Omit<Section, 'id'>>
+	section: Partial<NewSection>
 ) {
 	try {
 		const response = await databases.updateDocument(
