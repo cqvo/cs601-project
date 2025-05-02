@@ -39,8 +39,8 @@
 			// Extract unique categories
 			const uniqueCategories = new Set(skills.map((skill) => skill.category));
 			categories = Array.from(uniqueCategories).sort();
-		} catch (err: any) {
-			error = err.message || 'Failed to load skills';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to load skills';
 		} finally {
 			loading = false;
 		}
@@ -76,8 +76,8 @@
 
 			// Reset form
 			showNewSkillForm = false;
-		} catch (err: any) {
-			error = err.message || 'Failed to create skill';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to create skill';
 		} finally {
 			loading = false;
 		}
@@ -106,8 +106,8 @@
 
 			// Reset form
 			editingSkillId = null;
-		} catch (err: any) {
-			error = err.message || 'Failed to update skill';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to update skill';
 		} finally {
 			loading = false;
 		}
@@ -120,8 +120,8 @@
 				isVisible: !skill.isVisible
 			});
 			await loadSkills();
-		} catch (err: any) {
-			error = err.message || 'Failed to update skill visibility';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to update skill visibility';
 		} finally {
 			loading = false;
 		}
@@ -136,8 +136,8 @@
 			loading = true;
 			await deleteSkill(skillId);
 			await loadSkills();
-		} catch (err: any) {
-			error = err.message || 'Failed to delete skill';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to delete skill';
 		} finally {
 			loading = false;
 		}
@@ -303,7 +303,7 @@
 								{#if editingSkillId === skill.$id}
 									<form onsubmit={(e) => { e.preventDefault(); submitEditSkill(); }} class="space-y-4">
 										<div>
-											<label class="mb-1 block text-sm font-medium">Skill Name *</label>
+											<span class="mb-1 block text-sm font-medium">Skill Name *</span>
 											<input
 												type="text"
 												bind:value={editingSkill.name}
@@ -313,7 +313,7 @@
 										</div>
 
 										<div>
-											<label class="mb-1 block text-sm font-medium">Category *</label>
+											<span class="mb-1 block text-sm font-medium">Category *</span>
 											<div class="flex gap-2">
 												<select
 													bind:value={editingSkill.category}
@@ -336,9 +336,9 @@
 										</div>
 
 										<div>
-											<label class="mb-1 block text-sm font-medium">
+											<span class="mb-1 block text-sm font-medium">
 												Skill Level: {editingSkill.level}/5
-											</label>
+											</span>
 											<input
 												type="range"
 												min="1"

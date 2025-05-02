@@ -7,7 +7,7 @@ export const load: PageLoad = async () => {
   // Check authentication on the client-side as well
   const currentUser = await getCurrentUser();
   
-  // If not authenticated, redirect to login
+  // If not authenticated, redirect to /login
   if (!currentUser || !get(isAuthenticated)) {
     // Redirect with 303 to ensure using GET for the login page
     redirect(303, '/login');

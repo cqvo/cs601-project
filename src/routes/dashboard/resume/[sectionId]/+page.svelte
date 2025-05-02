@@ -53,8 +53,8 @@
 
 			// Load entries for this section
 			entries = await getEntries(sectionId);
-		} catch (err: any) {
-			error = err.message || 'Failed to load section data';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to load section data';
 		} finally {
 			loading = false;
 		}
@@ -94,8 +94,8 @@
 
 			// Reset form
 			showNewEntryForm = false;
-		} catch (err: any) {
-			error = err.message || 'Failed to create entry';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to create entry';
 		} finally {
 			loading = false;
 		}
@@ -126,8 +126,8 @@
 
 			// Reset form
 			editingEntryId = null;
-		} catch (err: any) {
-			error = err.message || 'Failed to update entry';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to update entry';
 		} finally {
 			loading = false;
 		}
@@ -140,8 +140,8 @@
 				isVisible: !entry.isVisible
 			});
 			await loadSectionData();
-		} catch (err: any) {
-			error = err.message || 'Failed to update entry visibility';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to update entry visibility';
 		} finally {
 			loading = false;
 		}
@@ -156,14 +156,12 @@
 			loading = true;
 			await deleteEntry(entryId);
 			await loadSectionData();
-		} catch (err: any) {
-			error = err.message || 'Failed to delete entry';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to delete entry';
 		} finally {
 			loading = false;
 		}
 	}
-
-	$inspect(section, entries, loading, error);
 </script>
 
 <div class="space-y-6">
@@ -332,7 +330,7 @@
 					{#if editingEntryId === entry.$id}
 						<form onsubmit={(e) => { e.preventDefault(); submitEditEntry(); }} class="space-y-4">
 							<div>
-								<label class="mb-1 block text-sm font-medium">Title *</label>
+								<span class="mb-1 block text-sm font-medium">Title *</span>
 								<input
 									type="text"
 									bind:value={editingEntry.title}
@@ -343,7 +341,7 @@
 							</div>
 
 							<div>
-								<label class="mb-1 block text-sm font-medium">Subtitle</label>
+								<span class="mb-1 block text-sm font-medium">Subtitle</span>
 								<input
 									type="text"
 									bind:value={editingEntry.subtitle}
@@ -354,7 +352,7 @@
 
 							<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 								<div>
-									<label class="mb-1 block text-sm font-medium">Start Date</label>
+									<span class="mb-1 block text-sm font-medium">Start Date</span>
 									<div class="relative">
 										<span class="text-surface-600-300-token absolute top-3 left-3">
 											<Calendar size={18} />
@@ -368,7 +366,7 @@
 								</div>
 
 								<div>
-									<label class="mb-1 block text-sm font-medium">End Date</label>
+									<span class="mb-1 block text-sm font-medium">End Date</span>
 									<div class="relative">
 										<span class="text-surface-600-300-token absolute top-3 left-3">
 											<Calendar size={18} />
@@ -386,7 +384,7 @@
 							</div>
 
 							<div>
-								<label class="mb-1 block text-sm font-medium">Description</label>
+								<span class="mb-1 block text-sm font-medium">Description</span>
 								<textarea
 									bind:value={editingEntry.description}
 									class="bg-surface-50-900-token min-h-[100px] w-full rounded-lg border p-3"
@@ -477,7 +475,7 @@
 									</button>
 
 									<button
-										onclick={() => removeEntry(entry.$id!)}
+										onclick={() => removeEntry(entry.$id)}
 										class="hover:bg-surface-200-700-token text-error-500 rounded-lg p-2"
 										title="Delete entry"
 									>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { user } from '$lib/appwrite/services';
-	import { account } from '$lib/appwrite/index';
+	import { account } from '$lib/appwrite';
 	import { onMount } from 'svelte';
 	import { Loader2, Save, AlertCircle, Check } from '@lucide/svelte';
 
@@ -29,8 +29,8 @@
 			// Update the user store
 			const updatedUser = await account.get();
 			user.set(updatedUser);
-		} catch (err: any) {
-			error = err.message || 'Failed to update profile';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Failed to update profile';
 		} finally {
 			loading = false;
 		}
@@ -71,7 +71,7 @@
 
 			{#if $user}
 				<div>
-					<label class="mb-1 block text-sm font-medium">Email Address</label>
+					<span class="mb-1 block text-sm font-medium">Email Address</span>
 					<div
 						class="bg-surface-200-700-token text-surface-600-300-token w-full rounded-lg border p-3"
 					>

@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { getVisibleSections, getVisibleEntries, getVisibleSkills } from '$lib/appwrite/services';
+	import type { Entry, Section, Skill } from '$lib/appwrite/services';
 	import { onMount } from 'svelte';
 	import { Printer, Briefcase, GraduationCap, Award } from '@lucide/svelte';
 
-	let sections = $state([]);
-	let entries = $state([]);
-	let skills = $state([]);
+	let sections: Section[] = $state([]);
+	let entries: Entry[] = $state([]);
+	let skills: Skill[] = $state([]);
 	let loading = $state(true);
 
 	// Function to load resume data
@@ -56,11 +57,11 @@
 
 <div class="relative">
 	<!-- Resume header with print button -->
-	<div class="mb-8 flex items-start justify-between print:hidden">
+	<div class="mb-8 flex items-start justify-between">
 		<h1 class="text-4xl font-bold">Chris Vo</h1>
 		<button
 			onclick={printResume}
-			class="bg-primary-500 hover:bg-primary-600 flex items-center gap-2 rounded-lg px-4 py-2 text-white"
+			class="print:hidden bg-primary-500 hover:bg-primary-600 flex items-center gap-2 rounded-lg px-4 py-2 text-white"
 		>
 			<Printer size={18} />
 			<span>Print</span>
@@ -174,9 +175,6 @@
 		h1,
 		h2,
 		h3,
-		h4 {
-			color: black;
-		}
 
 		.shadow-sm {
 			box-shadow: none;

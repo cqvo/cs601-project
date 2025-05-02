@@ -52,7 +52,7 @@ export const load: LayoutServerLoad = async ({ locals, url, request }) => {
 	// If we get here, there's no indication of authentication at all
 	if (dev) console.log('DASHBOARD SERVER: No auth indications, redirecting to login');
 	
-	// Redirect to login with the current path for redirect after login
+	// Redirect to /login with the current path for redirect after login
 	const encodedRedirect = encodeURIComponent(url.pathname);
 	redirect(303, `/login?redirectTo=${encodedRedirect}`);
 };

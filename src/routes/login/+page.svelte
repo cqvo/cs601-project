@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { login, createAccount, isAuthenticated, user, getCurrentUser } from '$lib/appwrite/auth';
+	import { login, createAccount, isAuthenticated, getCurrentUser } from '$lib/appwrite/auth';
 	import { goto } from '$app/navigation';
 	import { LogIn, UserPlus, AlertCircle } from '@lucide/svelte';
 	import { onMount } from 'svelte';
@@ -42,8 +42,8 @@
 				await login(email, password);
 			}
 			goto('/dashboard');
-		} catch (err: any) {
-			error = err.message || 'An error occurred during authentication';
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'An error occurred during authentication';
 		} finally {
 			loading = false;
 		}

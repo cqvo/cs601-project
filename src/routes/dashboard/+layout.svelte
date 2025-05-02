@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { logout, user as userStore, isAuthenticated, isRefreshing, getCurrentUser, refreshAuth } from '$lib/appwrite/auth';
+	import { logout, user as userStore, isRefreshing, getCurrentUser, refreshAuth } from '$lib/appwrite/auth';
 	import { LogOut, FileText, Settings, LayoutDashboard, Award, Loader2, RefreshCw } from '@lucide/svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -43,7 +43,7 @@
 			} else {
 				if (dev) console.log('DASHBOARD CLIENT: Auth refresh failed - session invalid');
 				authError = true;
-				// Redirect to login after failed refresh
+				// Redirect to /login after failed refresh
 				setTimeout(() => {
 					const currentPath = window.location.pathname;
 					goto(`/login?redirectTo=${encodeURIComponent(currentPath)}`);
@@ -157,14 +157,14 @@
 
 	<!-- Sidebar -->
 	<aside
-		class="border-surface-300-600-token bg-surface-100-800-token fixed inset-y-0 left-0 z-10 w-64 transform border-r transition-transform duration-200 ease-in-out md:relative md:translate-x-0 {sidebarOpen
+		class="border-surface-300-700 bg-surface-100-900 fixed inset-y-0 left-0 z-10 w-64 transform border-r transition-transform duration-200 ease-in-out md:relative md:translate-x-0 {sidebarOpen
 			? 'translate-x-0'
 			: '-translate-x-full'}"
 	>
-		<div class="border-surface-300-600-token border-b p-4">
+		<div class="border-surface-300-700 border-b p-4">
 			<div class="text-xl font-semibold">Dashboard</div>
 			{#if user}
-				<div class="text-surface-600-300-token mt-1 truncate text-sm">
+				<div class="text-surface-600-300 mt-1 truncate text-sm">
 					{user.name || user.email}
 				</div>
 			{/if}
@@ -173,9 +173,9 @@
 		<nav class="space-y-1 p-4">
 			<a
 				href="/dashboard"
-				class="text-surface-900-50-token hover:bg-surface-200-700-token flex items-center gap-3 rounded-lg px-4 py-2"
+				class="text-surface-950-50 hover:bg-surface-300-700 flex items-center gap-3 rounded-lg px-4 py-2"
 				aria-current={'/dashboard' === window.location.pathname ? 'page' : undefined}
-				class:bg-surface-200-700-token={'/dashboard' === window.location.pathname}
+				class:bg-surface-300-700={'/dashboard' === window.location.pathname}
 			>
 				<LayoutDashboard size={18} />
 				<span>Overview</span>
@@ -183,9 +183,9 @@
 
 			<a
 				href="/dashboard/resume"
-				class="text-surface-900-50-token hover:bg-surface-200-700-token flex items-center gap-3 rounded-lg px-4 py-2"
+				class="text-surface-950-50 hover:bg-surface-300-700 flex items-center gap-3 rounded-lg px-4 py-2"
 				aria-current={'/dashboard/resume' === window.location.pathname ? 'page' : undefined}
-				class:bg-surface-200-700-token={'/dashboard/resume' === window.location.pathname}
+				class:bg-surface-300-700={'/dashboard/resume' === window.location.pathname}
 			>
 				<FileText size={18} />
 				<span>Resume Sections</span>
@@ -193,9 +193,9 @@
 
 			<a
 				href="/dashboard/skills"
-				class="text-surface-900-50-token hover:bg-surface-200-700-token flex items-center gap-3 rounded-lg px-4 py-2"
+				class="text-surface-950-50 hover:bg-surface-300-700 flex items-center gap-3 rounded-lg px-4 py-2"
 				aria-current={'/dashboard/skills' === window.location.pathname ? 'page' : undefined}
-				class:bg-surface-200-700-token={'/dashboard/skills' === window.location.pathname}
+				class:bg-surface-300-700={'/dashboard/skills' === window.location.pathname}
 			>
 				<Award size={18} />
 				<span>Skills</span>
@@ -203,9 +203,9 @@
 
 			<a
 				href="/dashboard/settings"
-				class="text-surface-900-50-token hover:bg-surface-200-700-token flex items-center gap-3 rounded-lg px-4 py-2"
+				class="text-surface-950-50 hover:bg-surface-300-700 flex items-center gap-3 rounded-lg px-4 py-2"
 				aria-current={'/dashboard/settings' === window.location.pathname ? 'page' : undefined}
-				class:bg-surface-200-700-token={'/dashboard/settings' === window.location.pathname}
+				class:bg-surface-300-700={'/dashboard/settings' === window.location.pathname}
 			>
 				<Settings size={18} />
 				<span>Settings</span>
@@ -215,7 +215,7 @@
 		<div class="absolute right-0 bottom-0 left-0 p-4">
 			<button
 				onclick={handleLogout}
-				class="bg-surface-200-700-token text-surface-900-50-token hover:bg-surface-300-600-token flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2"
+				class="bg-surface-300-700 text-surface-950-50 hover:bg-surface-400-600 flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2"
 			>
 				<LogOut size={18} />
 				<span>Logout</span>
